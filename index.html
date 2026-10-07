@@ -6,43 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>JR Soluciones Automotrices</title>
-<details style="
-  max-width: 700px;
-  margin: 30px auto 15px;
-  background: #151515;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 5px 20px;
-  text-align: left;
-">
-  <summary style="
-    cursor: pointer;
-    font-size: 21px;
-    font-weight: bold;
-    padding: 18px 0;
-    color: white;
-  ">
-    🔧 Trabajos que realizamos
-  </summary>
+<div class="menu-container">
 
-  <div style="
-    color: #cccccc;
-    font-size: 18px;
-    line-height: 1.8;
-    padding-bottom: 15px;
-  ">
-    <p>✓ Mecánica general</p>
-    <p>✓ Diagnóstico automotriz</p>
-    <p>✓ Escaneo computarizado</p>
-    <p>✓ Reparación de motores</p>
-    <p>✓ Sistema de frenos</p>
-    <p>✓ Suspensión y dirección</p>
-    <p>✓ Sistema eléctrico</p>
-    <p>✓ Mantenimiento preventivo</p>
+  <button class="menu-button" onclick="abrirMenu()">☰</button>
+
+  <div id="menuDesplegable" class="menu-desplegable">
+
+    <button class="cerrar-menu" onclick="cerrarMenu()">✕</button>
+
+    <h2>JR SOLUCIONES AUTOMOTRICES</h2>
+
+    <button class="opcion-menu" onclick="mostrarServicios()">
+      🔧 Trabajos que realizamos
+    </button>
+
+    <div id="servicios" class="contenido-menu">
+      <p>✓ Mecánica general</p>
+      <p>✓ Diagnóstico automotriz</p>
+      <p>✓ Escaneo computarizado</p>
+      <p>✓ Reparación de motores</p>
+      <p>✓ Sistema de frenos</p>
+      <p>✓ Suspensión y dirección</p>
+      <p>✓ Sistema eléctrico</p>
+      <p>✓ Mantenimiento preventivo</p>
+    </div>
+
+    <button class="opcion-menu" onclick="mostrarContacto()">
+      📍 Ubicación y contacto
+    </button>
+
+    <div id="contacto" class="contenido-menu">
+      <p>📍 Panamá</p>
+      <p>📱 WhatsApp: colocar número</p>
+      <p>📞 Teléfono: colocar número</p>
+      <p>📸 Instagram: colocar Instagram</p>
+      <p>🕐 Horario: colocar horario</p>
+    </div>
+
   </div>
-</details>
 
-
+</div>
 <details style="
   max-width: 700px;
   margin: 15px auto;
