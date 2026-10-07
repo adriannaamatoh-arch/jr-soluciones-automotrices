@@ -6,121 +6,476 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>JR Soluciones Automotrices</title>
-<div class="menu-container">
 
-  <button class="menu-button" onclick="abrirMenu()">☰</button>
-
-  <div id="menuDesplegable" class="menu-desplegable">
-
-    <button class="cerrar-menu" onclick="cerrarMenu()">✕</button>
-
-    <h2>JR SOLUCIONES AUTOMOTRICES</h2>
-
-    <button class="opcion-menu" onclick="mostrarServicios()">
-      🔧 Trabajos que realizamos
-    </button>
-
-    <div id="servicios" class="contenido-menu">
-      <p>✓ Mecánica general</p>
-      <p>✓ Diagnóstico automotriz</p>
-      <p>✓ Escaneo computarizado</p>
-      <p>✓ Reparación de motores</p>
-      <p>✓ Sistema de frenos</p>
-      <p>✓ Suspensión y dirección</p>
-      <p>✓ Sistema eléctrico</p>
-      <p>✓ Mantenimiento preventivo</p>
-    </div>
-
-    <button class="opcion-menu" onclick="mostrarContacto()">
-      📍 Ubicación y contacto
-    </button>
-
-    <div id="contacto" class="contenido-menu">
-      <p>📍 Panamá</p>
-      <p>📱 WhatsApp: colocar número</p>
-      <p>📞 Teléfono: colocar número</p>
-      <p>📸 Instagram: colocar Instagram</p>
-      <p>🕐 Horario: colocar horario</p>
-    </div>
-
-  </div>
-
-</div>
-<details style="
-  max-width: 700px;
-  margin: 15px auto;
-  background: #151515;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 5px 20px;
-  text-align: left;
-">
-  <summary style="
-    cursor: pointer;
-    font-size: 21px;
-    font-weight: bold;
-    padding: 18px 0;
-    color: white;
-  ">
-    📍 Ubicación y contacto
-  </summary>
-
-  <div style="
-    color: #cccccc;
-    font-size: 18px;
-    line-height: 1.8;
-    padding-bottom: 15px;
-  ">
-    <p><strong>JR Soluciones Automotrices</strong></p>
-    <p>📍 Dirección: Panamá</p>
-    <p>📱 WhatsApp: colocar número</p>
-    <p>📞 Teléfono: colocar número</p>
-    <p>📸 Instagram: colocar Instagram</p>
-    <p>🕐 Horario: colocar horario</p>
-  </div>
-</details>
-  
   <style>
-    body {
-      background: #000;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 60px 20px;
+      padding: 0;
+    }
+
+    body {
+      background: #050505;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* BARRA SUPERIOR */
+
+    header {
+      width: 100%;
+      height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 35px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 500;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+    }
+
+    .nombre-header {
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    /* BOTÓN TRES RAYAS */
+
+    .menu-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 34px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    .menu-btn:hover {
+      opacity: 0.7;
+    }
+
+    /* PÁGINA PRINCIPAL */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 20px 60px;
     }
 
     .logo {
-      width: 720px;
-      max-width: 85%;
-      display: block;
-      margin: 0 auto 30px;
+      width: 650px;
+      max-width: 88%;
+      height: auto;
+      margin-bottom: 30px;
     }
 
     h1 {
-      font-size: 24px;
-      color: white;
-      margin-bottom: 10px;
+      font-size: 28px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
     }
 
-    p {
-      color: #cccccc;
-      font-size: 20px;
+    .frase {
+      color: #bdbdbd;
+      font-size: 18px;
+      letter-spacing: 1px;
     }
+
+    .linea-roja {
+      width: 70px;
+      height: 3px;
+      background: #d71920;
+      margin-top: 25px;
+      border-radius: 5px;
+    }
+
+    /* FONDO OSCURO CUANDO ABRE EL MENÚ */
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+      z-index: 700;
+    }
+
+    .overlay.activo {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* MENÚ LATERAL */
+
+    .menu-lateral {
+      position: fixed;
+      top: 0;
+      right: -390px;
+      width: 360px;
+      max-width: 90%;
+      height: 100vh;
+      background: #111;
+      z-index: 800;
+      padding: 35px 25px;
+      transition: right 0.35s ease;
+      overflow-y: auto;
+      box-shadow: -10px 0 35px rgba(0, 0, 0, 0.7);
+    }
+
+    .menu-lateral.activo {
+      right: 0;
+    }
+
+    .menu-superior {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .menu-superior h2 {
+      font-size: 17px;
+      letter-spacing: 1px;
+    }
+
+    .cerrar {
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* OPCIONES DEL MENÚ */
+
+    details {
+      border-bottom: 1px solid #333;
+      padding: 5px 0;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 20px 5px;
+      font-size: 17px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      font-size: 24px;
+      color: #d71920;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    .contenido {
+      padding: 5px 5px 22px;
+      color: #c5c5c5;
+    }
+
+    .contenido p {
+      font-size: 15px;
+      margin: 12px 0;
+      line-height: 1.5;
+    }
+
+    .servicio {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .check {
+      color: #d71920;
+      font-weight: bold;
+    }
+
+    .menu-footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+    }
+
+    /* CELULAR */
+
+    @media (max-width: 600px) {
+
+      header {
+        height: 70px;
+        padding: 0 20px;
+      }
+
+      .nombre-header {
+        font-size: 12px;
+      }
+
+      .menu-btn {
+        font-size: 30px;
+      }
+
+      .logo {
+        width: 420px;
+        max-width: 94%;
+      }
+
+      h1 {
+        font-size: 21px;
+      }
+
+      .frase {
+        font-size: 15px;
+      }
+
+    }
+
   </style>
 </head>
 
+
 <body>
 
-  <img
-    src="logo-jr.jpeg"
-    alt="JR Soluciones Automotrices"
-    class="logo"
-  >
+  <!-- BARRA SUPERIOR -->
 
-  <h1>JR SOLUCIONES AUTOMOTRICES</h1>
+  <header>
 
-  <p>Servicio automotriz profesional y confiable</p>
+    <div class="nombre-header">
+      JR SOLUCIONES AUTOMOTRICES
+    </div>
+
+    <button class="menu-btn"
+            onclick="abrirMenu()"
+            aria-label="Abrir menú">
+      ☰
+    </button>
+
+  </header>
+
+
+  <!-- PÁGINA PRINCIPAL -->
+
+  <main class="hero">
+
+    <img
+      src="logo-jr.jpeg"
+      alt="JR Soluciones Automotrices"
+      class="logo"
+    >
+
+    <h1>JR SOLUCIONES AUTOMOTRICES</h1>
+
+    <p class="frase">
+      Servicio automotriz profesional y confiable
+    </p>
+
+    <div class="linea-roja"></div>
+
+  </main>
+
+
+  <!-- FONDO CUANDO ABRE EL MENÚ -->
+
+  <div
+    id="overlay"
+    class="overlay"
+    onclick="cerrarMenu()">
+  </div>
+
+
+  <!-- MENÚ LATERAL -->
+
+  <aside
+    id="menuLateral"
+    class="menu-lateral">
+
+    <div class="menu-superior">
+
+      <h2>MENÚ</h2>
+
+      <button
+        class="cerrar"
+        onclick="cerrarMenu()">
+        ✕
+      </button>
+
+    </div>
+
+
+    <!-- TRABAJOS -->
+
+    <details>
+
+      <summary>
+        🔧 Trabajos que realizamos
+      </summary>
+
+      <div class="contenido">
+
+        <p class="servicio">
+          <span class="check">✓</span>
+          Mecánica general
+        </p>
+
+        <p class="servicio">
+          <span class="check">✓</span>
+          Diagnóstico automotriz
+        </p>
+
+        <p class="servicio">
+          <span class="check">✓</span>
+          Escaneo computarizado
+        </p>
+
+        <p class="servicio">
+          <span class="check">✓</span>
+          Reparación de motores
+        </p>
+
+        <p class="servicio">
+          <span class="check">✓</span>
+          Sistema de frenos
+        </p>
+
+        <p class="servicio">
+          <span class="check">✓</span>
+          Suspensión y dirección
+        </p>
+
+        <p class="servicio">
+          <span class="check">✓</span>
+          Sistema eléctrico
+        </p>
+
+        <p class="servicio">
+          <span class="check">✓</span>
+          Mantenimiento preventivo
+        </p>
+
+      </div>
+
+    </details>
+
+
+    <!-- UBICACIÓN -->
+
+    <details>
+
+      <summary>
+        📍 Ubicación y contacto
+      </summary>
+
+      <div class="contenido">
+
+        <p>
+          <strong>JR Soluciones Automotrices</strong>
+        </p>
+
+        <p>
+          📍 Panamá
+        </p>
+
+        <p>
+          📱 WhatsApp: colocar número
+        </p>
+
+        <p>
+          ☎️ Teléfono: colocar número
+        </p>
+
+        <p>
+          📸 Instagram: colocar Instagram
+        </p>
+
+        <p>
+          🕐 Horario: colocar horario
+        </p>
+
+      </div>
+
+    </details>
+
+
+    <!-- SOBRE NOSOTROS -->
+
+    <details>
+
+      <summary>
+        🚘 Sobre nosotros
+      </summary>
+
+      <div class="contenido">
+
+        <p>
+          En JR Soluciones Automotrices trabajamos para brindar
+          soluciones confiables para el mantenimiento y reparación
+          de tu vehículo.
+        </p>
+
+        <p>
+          Nuestro compromiso es ofrecer atención profesional,
+          diagnóstico responsable y un servicio de calidad.
+        </p>
+
+      </div>
+
+    </details>
+
+
+    <div class="menu-footer">
+      JR Soluciones Automotrices
+    </div>
+
+  </aside>
+
+
+  <!-- FUNCIONES DEL MENÚ -->
+
+  <script>
+
+    function abrirMenu() {
+      document
+        .getElementById("menuLateral")
+        .classList.add("activo");
+
+      document
+        .getElementById("overlay")
+        .classList.add("activo");
+    }
+
+
+    function cerrarMenu() {
+      document
+        .getElementById("menuLateral")
+        .classList.remove("activo");
+
+      document
+        .getElementById("overlay")
+        .classList.remove("activo");
+    }
+
+  </script>
 
 </body>
 
